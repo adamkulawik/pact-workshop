@@ -27,7 +27,7 @@ class TestStartTransaction {
             String cpName = "cp name";
             int connectorId = 1;
             String idTag = "43242498";
-            String messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, Date.from(when));
+            String messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, when);
             validate(messageId, cpName, connectorId, idTag, when);
             log.info("Congratulation, you are able to integrate systems without tests :D");
         } catch (Exception e) {

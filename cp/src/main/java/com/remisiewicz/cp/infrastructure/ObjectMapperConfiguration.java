@@ -8,10 +8,10 @@ import io.micronaut.context.event.BeanCreatedEventListener;
 
 import javax.inject.Singleton;
 
-//@Singleton
-class ObjectMapperConfiguration {//implements BeanCreatedEventListener<ObjectMapper> {
+@Singleton
+class ObjectMapperConfiguration implements BeanCreatedEventListener<ObjectMapper> {
 
-//    @Override
+    @Override
     public ObjectMapper onCreated(BeanCreatedEvent<ObjectMapper> event) {
         return event.getBean()
                 .registerModule(new JavaTimeModule())

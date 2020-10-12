@@ -1,5 +1,6 @@
 package com.remisiewicz.cp.infrastructure.csc;
 
+import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.client.HttpClient;
@@ -8,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Map;
 
 public class CscRestClient {
@@ -21,18 +22,18 @@ public class CscRestClient {
         this.client = client;
     }
 
-    public String remoteStartTransaction(String chargingPointName, int connectorId, String idTag, Date when) {
-        String location = "";
+    public String remoteStartTransaction(String chargingPointName, int connectorId, String idTag, Instant when) {
+        String location = "/chargingpoints/{chargingPointName}/actions/{action}";
         URI uri = UriBuilder
                 .of(location)
-                .expand(Map.of());
-//      or  URI uri = UriBuilder
-//                .of(location)
-//                .build();
-        RemoteStartTransactionRequest remoteStartTransactionRequest = new RemoteStartTransactionRequest();
-        MutableHttpRequest<RemoteStartTransactionRequest> request = null;//HttpRequest.
-        HttpResponse<?> response = client.toBlocking().exchange(request);
+                .expand(Map.of(
+                        "chargingPointName", chargingPointName,
+                        "action", "RemoteStartTransaction"
+                ));
+        RemoteStartTransactionRequest remoteStartTransactionRequest = new RemoteStartTransactionRequest(connectorId, idTag, when);
+        MutableHttpRequest<RemoteStartTransactionRequest> request = HttpRequest.POST(uri, remoteStartTransactionRequest);
+        HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
         logger.info("Remote start transaction {} sent to {} with result {}", remoteStartTransactionRequest, chargingPointName, response.getBody());
-        return response.getBody().get().toString();
+        return response.getBody().get();
     }
 }
