@@ -1,0 +1,47 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "io.micronaut.application" version '1.0.3'
+}
+
+version "0.1"
+group "com.remisiewicz.csc"
+
+micronaut {
+    runtime "netty"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "com.remisiewicz.csc.*"
+    }
+}
+
+dependencies {
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("javax.annotation:javax.annotation-api")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut.kafka:micronaut-kafka")
+    implementation("org.apache.logging.log4j:log4j-core:2.12.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
+
+    testImplementation 'com.github.tomakehurst:wiremock-jre8:2.27.2'
+    testImplementation 'org.assertj:assertj-core:3.17.2'
+    testImplementation 'au.com.dius:pact-jvm-consumer-junit5:4.0.10'
+    testImplementation 'au.com.dius:pact-jvm-consumer-java8:4.0.10'
+    testImplementation 'au.com.dius:pact-jvm-provider-junit5:4.0.10'
+    testImplementation 'org.assertj:assertj-core:3.17.2'
+    testImplementation 'org.awaitility:awaitility:4.0.3'
+    testImplementation 'org.testcontainers:testcontainers:1.14.3'
+    testImplementation 'org.testcontainers:kafka:1.14.3'
+}
+
+mainClassName = "com.remisiewicz.csc.Application"
+java {
+    sourceCompatibility = JavaVersion.toVersion('11')
+    targetCompatibility = JavaVersion.toVersion('11')
+}
+
+
+
+

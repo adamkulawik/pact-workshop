@@ -1,0 +1,6 @@
+micronaut:
+  application:
+    name: csc
+  server:
+    port: 9100
+kafka.bootstrap.servers: localhost:9092

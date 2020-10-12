@@ -1,0 +1,6 @@
+micronaut:
+  application:
+    name: cp
+  server:
+    port: 9101
+kafka.bootstrap.servers: localhost:9092
