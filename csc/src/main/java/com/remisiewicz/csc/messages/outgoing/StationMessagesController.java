@@ -12,8 +12,8 @@ class StationMessagesController {
     private static final Logger log = LoggerFactory.getLogger(StationMessagesController.class);
 
     @Post("/chargingpoints/{chargingPointName}/actions/{action}")
-    String remoteStartTransaction(String chargingPointName, String action, @Body RemoteStartTransactionRequest request) {
+    MessageId remoteStartTransaction(String chargingPointName, String action, @Body RemoteStartTransactionRequest request) {
         log.info("remoteStartTransaction {}, {}, {}", chargingPointName, action, request);
-        return chargingPointName + "-" + request.getConnectorId() + "-" + request.getIdTag() + "-" + request.getWhen();
+        return new MessageId(chargingPointName + "-" + request.getConnectorId() + "-" + request.getRfid() + "-" + request.getWhen());
     }
 }
