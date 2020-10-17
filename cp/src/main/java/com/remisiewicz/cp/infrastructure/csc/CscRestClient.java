@@ -23,7 +23,7 @@ public class CscRestClient {
     }
 
     public String remoteStartTransaction(String chargingPointName, int connectorId, String idTag, Instant when) {
-        String location = "/chargingpoints/{chargingPointName}/actions/{action}";
+        String location = "/chargepoints/{chargingPointName}/actions/{action}";
         URI uri = UriBuilder
                 .of(location)
                 .expand(Map.of(
