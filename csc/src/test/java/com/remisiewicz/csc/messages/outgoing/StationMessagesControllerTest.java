@@ -49,8 +49,9 @@ class StationMessagesControllerTest {
     }
 
     private MutableHttpRequest<RemoteStartTransactionRequest> remoteStartTransactionRequest() {
-        URI uri = UriBuilder.of("").expand(Map.of());
-        RemoteStartTransactionRequest body = null;
-        return HttpRequest.POST(uri, body);
+        URI uri = UriBuilder.of("/chargingpoints/{chargingPointName}/actions/{action}").expand(Map.of(
+                "chargingPointName", chargingPointName,
+                "action", "RemoteStartTransaction"));
+        return HttpRequest.POST(uri, new RemoteStartTransactionRequest(connectorId, rfid, when));
     }
 }

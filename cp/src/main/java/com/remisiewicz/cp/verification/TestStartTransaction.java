@@ -29,7 +29,7 @@ class TestStartTransaction {
             String idTag = "43242498";
             String messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, when);
             validate(messageId, cpName, connectorId, idTag, when);
-            log.info("Congratulation, you are able to integrate systems without tests :D");
+            log.info("Congratulation, you are able to integrate systems without CDC tests :D");
         } catch (Exception e) {
             log.error("You suck, please start to write CDC tests immediately!", e);
         }

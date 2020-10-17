@@ -1,5 +1,8 @@
 package com.remisiewicz.csc.messages.outgoing;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.Instant;
 
 public class RemoteStartTransactionRequest {
@@ -8,7 +11,11 @@ public class RemoteStartTransactionRequest {
     private final String rfid;
     private final Instant when;
 
-    public RemoteStartTransactionRequest(int connectorId, String rfid, Instant when) {
+    @JsonCreator
+    public RemoteStartTransactionRequest(
+            @JsonProperty("connectorId") int connectorId,
+            @JsonProperty("rfid") String rfid,
+            @JsonProperty("when") Instant when) {
         this.connectorId = connectorId;
         this.rfid = rfid;
         this.when = when;
