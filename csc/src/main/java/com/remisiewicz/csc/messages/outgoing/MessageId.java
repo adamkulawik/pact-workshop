@@ -10,10 +10,11 @@ public class MessageId {
     private final String id;
 
     @JsonCreator
-    public MessageId(@JsonProperty("id") String id) {
+    public MessageId(@JsonProperty("messageId") String id) {
         this.id = id;
     }
 
+    @JsonProperty("messageId")
     public String getId() {
         return id;
     }

@@ -13,7 +13,6 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Map;
-import java.util.StringJoiner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,21 +30,11 @@ class StationMessagesControllerTest {
 
     @Test
     void shouldHandleRemoteStartTransactionMessage() {
-        //given
-        String expectedMessageId = messageId();
         //when
         HttpResponse<MessageId> response = httpClient.toBlocking().exchange(remoteStartTransactionRequest(), MessageId.class);
         //then
         assertThat(response.getBody()).isPresent();
-        assertThat(response.getBody().get().getId()).isEqualTo(expectedMessageId);
-    }
-
-    private String messageId() {
-        return new StringJoiner("-")
-                .add(chargingPointName)
-                .add(String.valueOf(connectorId))
-                .add(rfid)
-                .add(when.toString()).toString();
+        assertThat(response.getBody().get().getId()).isNotBlank();
     }
 
     private MutableHttpRequest<RemoteStartTransactionRequest> remoteStartTransactionRequest() {
