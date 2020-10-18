@@ -1,0 +1,86 @@
+{
+  "provider": {
+    "name": "pw-gr1-csc"
+  },
+  "consumer": {
+    "name": "pw-gr1-cp"
+  },
+  "interactions": [
+    {
+      "description": "Remote start transaction",
+      "request": {
+        "method": "POST",
+        "path": "/chargingpoints/CS-c6be1cd5a384/actions/RemoteStartTransaction",
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "connectorId": 1,
+          "idTag": "c6be1cd5a384",
+          "when": "2019-07-03T12:15:30.001Z"
+        },
+        "matchingRules": {
+          "body": {
+            "$.when": {
+              "matchers": [
+                {
+                  "match": "date",
+                  "date": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "Content-Type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "messageId": "e2490de5-5bd3-43d5-b7c4-526e33f71304"
+        },
+        "matchingRules": {
+          "body": {
+            "$.messageId": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+                }
+              ],
+              "combine": "AND"
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ],
+              "combine": "AND"
+            }
+          }
+        },
+        "generators": {
+          "body": {
+            "$.messageId": {
+              "type": "Uuid"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "3.0.0"
+    },
+    "pact-jvm": {
+      "version": "4.0.10"
+    }
+  }
+}
