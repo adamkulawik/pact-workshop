@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Singleton;
 import java.time.Instant;
-import java.util.Date;
 
 @Singleton
 class TestStartTransaction {
@@ -29,9 +28,9 @@ class TestStartTransaction {
             String idTag = "43242498";
             String messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, when);
             validate(messageId, cpName, connectorId, idTag, when);
-            log.info("Congratulation, you are able to integrate systems without CDC tests :D");
+            log.info("Congratulation, you are able to integrate systems with CDC tests :D");
         } catch (Exception e) {
-            log.error("You suck, please start to write CDC tests immediately!", e);
+            log.error("You suck, please improve your CDC tests immediately!", e);
         }
         System.exit(0);
     }
