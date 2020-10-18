@@ -15,11 +15,13 @@ class CscStub {
 
     public void stubRemoteStartTransaction(String stationName, String messageId) {
         wireMockServer.stubFor(
-                post(urlEqualTo(format("/chargepoints/%s/actions/RemoteStartTransaction", stationName)))
+                post(urlEqualTo(format("/chargingpoints/%s/actions/RemoteStartTransaction", stationName)))
                         .willReturn(aResponse()
                                 .withStatus(201)
                                 .withHeader(CONTENT_TYPE, "application/json")
-                                .withBody(messageId)
+                                .withBody("{\n" +
+                                        "  \"messageId\": \"" + messageId + "\"\n" +
+                                        "}")
                         )
         );
     }

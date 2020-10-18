@@ -44,8 +44,8 @@ class CscRestClientTest {
                 .add(when.toString()).toString();
         cscStub.stubRemoteStartTransaction(chargingPointName, expectedMessageId);
         //when
-        String messageId = cscRestClient.remoteStartTransaction(chargingPointName, connectorId, idTag, when);
+        MessageId messageId = cscRestClient.remoteStartTransaction(chargingPointName, connectorId, idTag, when);
         //then
-        assertThat(messageId).isEqualTo(expectedMessageId);
+        assertThat(messageId.getId()).isEqualTo(expectedMessageId);
     }
 }

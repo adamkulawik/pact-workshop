@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 class CscConfiguration {
 
     @Singleton
-    CscRestClient cscClient(@Client("http://localhost:9100") HttpClient client) {
+    CscRestClient cscClient(@Client("${csc.url}") HttpClient client) {
         return new CscRestClient(client);
     }
 }

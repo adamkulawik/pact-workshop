@@ -12,6 +12,8 @@ import java.net.URI;
 import java.time.Instant;
 import java.util.Map;
 
+import static io.micronaut.http.HttpHeaders.CONTENT_TYPE;
+
 public class CscRestClient {
 
     private final Logger logger = LoggerFactory.getLogger(CscRestClient.class);
@@ -22,8 +24,8 @@ public class CscRestClient {
         this.client = client;
     }
 
-    public String remoteStartTransaction(String chargingPointName, int connectorId, String idTag, Instant when) {
-        String location = "/chargepoints/{chargingPointName}/actions/{action}";
+    public MessageId remoteStartTransaction(String chargingPointName, int connectorId, String idTag, Instant when) {
+        String location = "/chargingpoints/{chargingPointName}/actions/{action}";
         URI uri = UriBuilder
                 .of(location)
                 .expand(Map.of(
@@ -31,8 +33,8 @@ public class CscRestClient {
                         "action", "RemoteStartTransaction"
                 ));
         RemoteStartTransactionRequest remoteStartTransactionRequest = new RemoteStartTransactionRequest(connectorId, idTag, when);
-        MutableHttpRequest<RemoteStartTransactionRequest> request = HttpRequest.POST(uri, remoteStartTransactionRequest);
-        HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
+        MutableHttpRequest<RemoteStartTransactionRequest> request = HttpRequest.POST(uri, remoteStartTransactionRequest).header(CONTENT_TYPE, "application/json; charset=UTF-8");
+        HttpResponse<MessageId> response = client.toBlocking().exchange(request, MessageId.class);
         logger.info("Remote start transaction {} sent to {} with result {}", remoteStartTransactionRequest, chargingPointName, response.getBody());
         return response.getBody().get();
     }

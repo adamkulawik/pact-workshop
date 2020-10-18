@@ -1,6 +1,7 @@
 package com.remisiewicz.cp.verification;
 
 import com.remisiewicz.cp.infrastructure.csc.CscRestClient;
+import com.remisiewicz.cp.infrastructure.csc.MessageId;
 import io.micronaut.scheduling.annotation.Scheduled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ class TestStartTransaction {
             String cpName = "cp name";
             int connectorId = 1;
             String idTag = "43242498";
-            String messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, when);
+            MessageId messageId = cscRestClient.remoteStartTransaction(cpName, connectorId, idTag, when);
             validate(messageId, cpName, connectorId, idTag, when);
             log.info("Congratulation, you are able to integrate systems with CDC tests :D");
         } catch (Exception e) {
@@ -35,8 +36,8 @@ class TestStartTransaction {
         System.exit(0);
     }
 
-    private void validate(String messageId, String cpName, int connectorId, String idTag, Instant when) {
-        if (!messageId.equals(String.format("%s-%d-%s-%s", cpName, connectorId, idTag, when))) {
+    private void validate(MessageId messageId, String cpName, int connectorId, String idTag, Instant when) {
+        if (!messageId.getId().equals(String.format("%s-%d-%s-%s", cpName, connectorId, idTag, when))) {
             throw new IllegalStateException();
         }
     }
