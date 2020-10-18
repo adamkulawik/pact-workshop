@@ -4,3 +4,4 @@ micronaut:
   server:
     port: 9101
 kafka.bootstrap.servers: localhost:9092
+csc.url: http://localhost:9100
