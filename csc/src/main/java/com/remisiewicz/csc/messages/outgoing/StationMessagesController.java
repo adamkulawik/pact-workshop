@@ -6,6 +6,8 @@ import io.micronaut.http.annotation.Post;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.UUID;
+
 @Controller
 class StationMessagesController {
 
@@ -14,6 +16,6 @@ class StationMessagesController {
     @Post("/chargingpoints/{chargingPointName}/actions/{action}")
     MessageId remoteStartTransaction(String chargingPointName, String action, @Body RemoteStartTransactionRequest request) {
         log.info("remoteStartTransaction {}, {}, {}", chargingPointName, action, request);
-        return new MessageId(chargingPointName + "-" + request.getConnectorId() + "-" + request.getRfid() + "-" + request.getWhen());
+        return new MessageId(UUID.randomUUID().toString());
     }
 }

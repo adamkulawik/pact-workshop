@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
+import java.util.StringJoiner;
 
 public class RemoteStartTransactionRequest {
 
@@ -31,5 +32,14 @@ public class RemoteStartTransactionRequest {
 
     public Instant getWhen() {
         return when;
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", RemoteStartTransactionRequest.class.getSimpleName() + "[", "]")
+                .add("connectorId=" + connectorId)
+                .add("rfid='" + rfid + "'")
+                .add("when=" + when)
+                .toString();
     }
 }
