@@ -1,6 +1,7 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "6.0.0"
     id "io.micronaut.application" version '1.0.3'
+    id "au.com.dius.pact" version "4.0.10"
 }
 
 version "0.1"
@@ -43,6 +44,8 @@ java {
     targetCompatibility = JavaVersion.toVersion('11')
 }
 
-
-
-
+pact {
+    publish {
+        pactBrokerUrl = 'https://emob-pact.azurewebsites.net/'
+    }
+}
