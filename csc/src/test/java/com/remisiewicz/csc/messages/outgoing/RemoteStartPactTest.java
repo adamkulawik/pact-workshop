@@ -1,6 +1,7 @@
 package com.remisiewicz.csc.messages.outgoing;
 
 import au.com.dius.pact.provider.junit.Provider;
+import au.com.dius.pact.provider.junit.loader.PactBroker;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 
 @MicronautTest
 @Provider("pw-gr1-csc")
+@PactBroker(scheme = "https", host = "emob-pact.azurewebsites.net")
 class RemoteStartPactTest {
 
     @Inject
