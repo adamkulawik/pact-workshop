@@ -9,6 +9,9 @@
         <Logger name="com.remisiewicz.csc" level="debug" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
+        <Logger name="au.com.dius.pact" level="debug" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
         <Root level="error">
             <AppenderRef ref="LogToConsole"/>
         </Root>
