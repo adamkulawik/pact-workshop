@@ -53,4 +53,18 @@ public class CscRestClient {
         logger.info("Remote stop transaction {} sent to {} with result {}", remoteStartTransactionRequest, chargingPointName, response.getBody());
         return response.getBody().get();
     }
+
+    public String clearCache(String chargingPointName) {
+        String location = "/chargingpoints/{chargingPointName}/actions/{action}";
+        URI uri = UriBuilder
+                .of(location)
+                .expand(Map.of(
+                        "chargingPointName", chargingPointName,
+                        "action", "ClearCache"
+                ));
+        MutableHttpRequest<Map<String, Instant>> request = HttpRequest.POST(uri, Map.of("from", Instant.now())).header(CONTENT_TYPE, "application/json; charset=UTF-8");
+        HttpResponse<String> response = client.toBlocking().exchange(request, String.class);
+        logger.info("Clear cache sent to {} with result {}", chargingPointName, response.getBody());
+        return response.getBody().get();
+    }
 }
