@@ -50,7 +50,23 @@ class RemoteTransactionRequestsPactTest {
                 .toPact();
     }
 
+    @Pact(consumer = "pw-gr1-cp")
+    RequestResponsePact remoteStopTransactionPact(PactDslWithProvider builder) {
+        return builder
+                .uponReceiving("Remote stop transaction")
+                .path(format("/chargingpoints/%s/actions/%s", STATION_NAME, "RemoteStopTransaction"))
+                .method("POST")
+                .body(new PactDslJsonBody()
+                        .numberValue("transactionId", TRANSACTION_ID)
+                )
+                .willRespondWith()
+                .status(201)
+                .body(new PactDslJsonBody().uuid("messageId"))
+                .toPact();
+    }
+
     @Test
+    @PactTestFor(pactMethod = "remoteStartTransactionPact")
     void shouldSendRemoteStartTransactionRequestToCsc() {
         //when
         MessageId messageId = cscRestClient.remoteStartTransaction(STATION_NAME, CONNECTOR_ID, ID_TAG, Instant.now());
@@ -59,6 +75,7 @@ class RemoteTransactionRequestsPactTest {
     }
 
     @Test
+    @PactTestFor(pactMethod = "remoteStopTransactionPact")
     void shouldSendRemoteStopTransactionRequestToCsc() {
         //when
         MessageId messageId = cscRestClient.remoteStopTransaction(STATION_NAME, TRANSACTION_ID);

@@ -17,7 +17,7 @@ public class RemoteStartTransactionRequest {
     @JsonCreator
     public RemoteStartTransactionRequest(
             @JsonProperty("connectorId") Integer connectorId,
-            @JsonProperty("rfid") String idTag,
+            @JsonProperty("idTag") String idTag,
             @JsonProperty("when") Instant when) {
         this.connectorId = requireNonNull(connectorId);
         this.idTag = requireNonNull(idTag);
