@@ -3,6 +3,7 @@ package com.remisiewicz.csc.messages.outgoing;
 import au.com.dius.pact.provider.junit.Provider;
 import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
+import au.com.dius.pact.provider.junit.loader.PactFilter;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
 import au.com.dius.pact.provider.junit5.PactVerificationInvocationContextProvider;
@@ -17,7 +18,8 @@ import javax.inject.Inject;
 @MicronautTest
 @Provider("pw-gr1-csc")
 @PactBroker(scheme = "https", host = "emob-pact.azurewebsites.net")
-class RemoteTransactionRequestsPactTest {
+@PactFilter("Remote stop transaction")
+class RemoteStopTransactionRequestPactTest {
 
     @Inject
     private EmbeddedServer embeddedServer;
@@ -39,10 +41,5 @@ class RemoteTransactionRequestsPactTest {
     @State("Remote stop transaction")
     void remoteStopTransaction() {
         controller.add("CS-c6be1cd5a384");
-    }
-
-    @State("remote start transaction")
-    void remoteStartTransaction() {
-
     }
 }
