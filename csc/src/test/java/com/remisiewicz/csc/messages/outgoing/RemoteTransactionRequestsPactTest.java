@@ -1,6 +1,7 @@
 package com.remisiewicz.csc.messages.outgoing;
 
 import au.com.dius.pact.provider.junit.Provider;
+import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
