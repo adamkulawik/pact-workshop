@@ -25,7 +25,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 @Property(name = "csc.url", value = "http://localhost:9004")
 class RemoteTransactionRequestsPactTest {
 
-    private static final String STATION_NAME = "CS-c6be1cd5a384";
+    private static final String STATION_NAME_FOR_START = "CS-c6be1cd5a383";
+    private static final String STATION_NAME_FOR_STOP = "CS-c6be1cd5a384";
     private static final int CONNECTOR_ID = 1;
     private static final String ID_TAG = "c6be1cd5a384";
     private static final int TRANSACTION_ID = 2;
@@ -36,8 +37,9 @@ class RemoteTransactionRequestsPactTest {
     @Pact(consumer = "pw-gr1-cp")
     RequestResponsePact remoteStartTransactionPact(PactDslWithProvider builder) {
         return builder
+                .given("remote start transaction")
                 .uponReceiving("remote start transaction")
-                .path(format("/chargingpoints/%s/actions/%s", STATION_NAME, "RemoteStartTransaction"))
+                .path(format("/chargingpoints/%s/actions/%s", STATION_NAME_FOR_START, "RemoteStartTransaction"))
                 .method("POST")
                 .body(new PactDslJsonBody()
                         .numberValue("connectorId", CONNECTOR_ID)
@@ -53,8 +55,9 @@ class RemoteTransactionRequestsPactTest {
     @Pact(consumer = "pw-gr1-cp")
     RequestResponsePact remoteStopTransactionPact(PactDslWithProvider builder) {
         return builder
+                .given("Remote stop transaction")
                 .uponReceiving("Remote stop transaction")
-                .path(format("/chargingpoints/%s/actions/%s", STATION_NAME, "RemoteStopTransaction"))
+                .path(format("/chargingpoints/%s/actions/%s", STATION_NAME_FOR_STOP, "RemoteStopTransaction"))
                 .method("POST")
                 .body(new PactDslJsonBody()
                         .numberValue("transactionId", TRANSACTION_ID)
@@ -69,7 +72,7 @@ class RemoteTransactionRequestsPactTest {
     @PactTestFor(pactMethod = "remoteStartTransactionPact")
     void shouldSendRemoteStartTransactionRequestToCsc() {
         //when
-        MessageId messageId = cscRestClient.remoteStartTransaction(STATION_NAME, CONNECTOR_ID, ID_TAG, Instant.now());
+        MessageId messageId = cscRestClient.remoteStartTransaction(STATION_NAME_FOR_START, CONNECTOR_ID, ID_TAG, Instant.now());
         //then
         assertThatNoException().isThrownBy(() -> fromString(messageId.getId()));
     }
@@ -78,7 +81,7 @@ class RemoteTransactionRequestsPactTest {
     @PactTestFor(pactMethod = "remoteStopTransactionPact")
     void shouldSendRemoteStopTransactionRequestToCsc() {
         //when
-        MessageId messageId = cscRestClient.remoteStopTransaction(STATION_NAME, TRANSACTION_ID);
+        MessageId messageId = cscRestClient.remoteStopTransaction(STATION_NAME_FOR_STOP, TRANSACTION_ID);
         //then
         assertThatNoException().isThrownBy(() -> fromString(messageId.getId()));
     }
