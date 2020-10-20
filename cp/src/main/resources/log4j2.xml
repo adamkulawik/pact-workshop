@@ -12,6 +12,12 @@
         <Logger name="au.com.dius.pact" level="debug" additivity="false">
             <AppenderRef ref="LogToConsole"/>
         </Logger>
+        <Logger name="io.micronaut" level="info" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
+        <Logger name="org.apache.kafka" level="info" additivity="false">
+            <AppenderRef ref="LogToConsole"/>
+        </Logger>
         <Root level="error">
             <AppenderRef ref="LogToConsole"/>
         </Root>
