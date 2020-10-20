@@ -36,7 +36,7 @@ class RemoteTransactionRequestsPactTest {
     @Pact(consumer = "pw-gr1-cp")
     RequestResponsePact remoteStartTransactionPact(PactDslWithProvider builder) {
         return builder
-                .uponReceiving("Remote start transaction")
+                .uponReceiving("remote start transaction")
                 .path(format("/chargingpoints/%s/actions/%s", STATION_NAME, "RemoteStartTransaction"))
                 .method("POST")
                 .body(new PactDslJsonBody()

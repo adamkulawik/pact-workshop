@@ -1,6 +1,7 @@
 package com.remisiewicz.csc.messages.outgoing;
 
 import au.com.dius.pact.provider.junit.Provider;
+import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
 import au.com.dius.pact.provider.junit5.HttpTestTarget;
 import au.com.dius.pact.provider.junit5.PactVerificationContext;
@@ -21,6 +22,9 @@ class RemoteTransactionRequestsPactTest {
     @Inject
     private EmbeddedServer embeddedServer;
 
+    @Inject
+    private StationMessagesController controller;
+
     @BeforeEach
     void setUpTarget(PactVerificationContext context) {
         context.setTarget(new HttpTestTarget(embeddedServer.getHost(), embeddedServer.getPort()));
@@ -30,5 +34,15 @@ class RemoteTransactionRequestsPactTest {
     @ExtendWith(PactVerificationInvocationContextProvider.class)
     void pactVerificationTestTemplate(PactVerificationContext context) {
         context.verifyInteraction();
+    }
+
+    @State("Remote stop transaction")
+    void remoteStopTransaction() {
+        controller.add("CS-c6be1cd5a384");
+    }
+
+    @State("remote start transaction")
+    void remoteStartTransaction() {
+
     }
 }
