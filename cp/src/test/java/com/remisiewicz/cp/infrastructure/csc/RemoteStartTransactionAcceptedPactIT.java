@@ -42,10 +42,7 @@ class RemoteStartTransactionAcceptedPactIT implements IntegrationTestWithContain
     private final DslPart remoteStartTransactionResponseJsonBody = LambdaDsl.newJsonBody(
             body -> {
                 body.stringValue("chargePoint", STATION_NAME);
-                body.stringValue("action", "RemoteStartTransaction");
-                body.stringValue("type", "ACCEPTED");
                 body.stringValue("messageId", MESSAGE_ID);
-                body.stringValue("payload", "[3,\"" + MESSAGE_ID + "\",{\"status\":\"Accepted\"}]");
             }
     ).build();
 
@@ -62,7 +59,7 @@ class RemoteStartTransactionAcceptedPactIT implements IntegrationTestWithContain
     }
 
     @Test
-    void shouldNotifyRoamingPartnerAboutResultOfRemoteStartTransaction(List<Message> messages) {
+    void shouldAcceptRemoteStartTransaction(List<Message> messages) {
         //when
         messages.forEach(message -> cscProducer.send(new ProducerRecord<>(
                 (String) message.getMetaData().get("kafka_topic"),
