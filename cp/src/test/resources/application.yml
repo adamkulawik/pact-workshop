@@ -1,3 +1,8 @@
 micronaut:
   server:
     port: 0
+kafka:
+  producers:
+    csc-producer:
+      value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      key.serializer: org.apache.kafka.common.serialization.StringSerializer
