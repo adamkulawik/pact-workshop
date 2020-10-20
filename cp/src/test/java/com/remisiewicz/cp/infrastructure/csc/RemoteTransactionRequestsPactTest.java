@@ -23,11 +23,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatNoException
 @PactTestFor(providerName = "pw-gr1-csc", port = "9004")
 @MicronautTest
 @Property(name = "csc.url", value = "http://localhost:9004")
-class RemoteStartPactTest {
+class RemoteTransactionRequestsPactTest {
 
     private static final String STATION_NAME = "CS-c6be1cd5a384";
     private static final int CONNECTOR_ID = 1;
     private static final String ID_TAG = "c6be1cd5a384";
+    private static final int TRANSACTION_ID = 2;
 
     @Inject
     CscRestClient cscRestClient;
@@ -51,9 +52,16 @@ class RemoteStartPactTest {
 
     @Test
     void shouldSendRemoteStartTransactionRequestToCsc() {
-        //given
         //when
         MessageId messageId = cscRestClient.remoteStartTransaction(STATION_NAME, CONNECTOR_ID, ID_TAG, Instant.now());
+        //then
+        assertThatNoException().isThrownBy(() -> fromString(messageId.getId()));
+    }
+
+    @Test
+    void shouldSendRemoteStopTransactionRequestToCsc() {
+        //when
+        MessageId messageId = cscRestClient.remoteStopTransaction(STATION_NAME, TRANSACTION_ID);
         //then
         assertThatNoException().isThrownBy(() -> fromString(messageId.getId()));
     }

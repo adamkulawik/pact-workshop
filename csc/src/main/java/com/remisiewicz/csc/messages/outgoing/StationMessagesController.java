@@ -16,10 +16,17 @@ class StationMessagesController {
 
     private static final Logger log = LoggerFactory.getLogger(StationMessagesController.class);
 
-    @Post("/chargingpoints/{chargingPointName}/actions/{action}")
+    @Post("/chargingpoints/{chargingPointName}/actions/RemoteStartTransaction")
     @Status(CREATED)
-    MessageId remoteStartTransaction(String chargingPointName, String action, @Body RemoteStartTransactionRequest request) {
-        log.info("remoteStartTransaction {}, {}, {}", chargingPointName, action, request);
+    MessageId remoteStartTransaction(String chargingPointName, @Body RemoteStartTransactionRequest request) {
+        log.info("remoteStartTransaction {}, {}", chargingPointName, request);
+        return new MessageId(UUID.randomUUID().toString());
+    }
+
+    @Post("/chargingpoints/{chargingPointName}/actions/RemoteStopTransaction")
+    @Status(CREATED)
+    MessageId remoteStopTransaction(String chargingPointName, @Body RemoteStopTransactionRequest request) {
+        log.info("remoteStopTransaction {}, {}", chargingPointName, request);
         return new MessageId(UUID.randomUUID().toString());
     }
 }

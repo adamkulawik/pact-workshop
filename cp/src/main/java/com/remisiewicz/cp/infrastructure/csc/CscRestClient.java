@@ -38,4 +38,19 @@ public class CscRestClient {
         logger.info("Remote start transaction {} sent to {} with result {}", remoteStartTransactionRequest, chargingPointName, response.getBody());
         return response.getBody().get();
     }
+
+    public MessageId remoteStopTransaction(String chargingPointName, int transactionId) {
+        String location = "/chargingpoints/{chargingPointName}/actions/{action}";
+        URI uri = UriBuilder
+                .of(location)
+                .expand(Map.of(
+                        "chargingPointName", chargingPointName,
+                        "action", "RemoteStopTransaction"
+                ));
+        RemoteStopTransactionRequest remoteStartTransactionRequest = new RemoteStopTransactionRequest(transactionId);
+        MutableHttpRequest<RemoteStopTransactionRequest> request = HttpRequest.POST(uri, remoteStartTransactionRequest).header(CONTENT_TYPE, "application/json; charset=UTF-8");
+        HttpResponse<MessageId> response = client.toBlocking().exchange(request, MessageId.class);
+        logger.info("Remote stop transaction {} sent to {} with result {}", remoteStartTransactionRequest, chargingPointName, response.getBody());
+        return response.getBody().get();
+    }
 }

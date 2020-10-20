@@ -16,7 +16,7 @@ import javax.inject.Inject;
 @MicronautTest
 @Provider("pw-gr1-csc")
 @PactBroker(scheme = "https", host = "emob-pact.azurewebsites.net")
-class RemoteStartPactTest {
+class RemoteTransactionRequestsPactTest {
 
     @Inject
     private EmbeddedServer embeddedServer;
